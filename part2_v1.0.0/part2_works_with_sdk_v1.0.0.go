@@ -140,10 +140,6 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 	} else if function == "remove_trade" {									//cancel an open trade order
 		return t.remove_trade(stub, args)
 	}
-	} else if function == "my_set_user" {									//cancel an open trade order
-		return t.my_set_user(stub, args)
-	}
-	
 	fmt.Println("run did not find func: " + function)						//error
 
 	return nil, errors.New("Received unknown function invocation")
@@ -307,35 +303,6 @@ func (t *SimpleChaincode) init_marble(stub *shim.ChaincodeStub, args []string) (
 // Set User Permission on Marble
 // ============================================================================================================================
 func (t *SimpleChaincode) set_user(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
-	var err error
-	
-	//   0       1
-	// "name", "bob"
-	if len(args) < 2 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 2")
-	}
-	
-	fmt.Println("- start set user")
-	fmt.Println(args[0] + " - " + args[1])
-	marbleAsBytes, err := stub.GetState(args[0])
-	if err != nil {
-		return nil, errors.New("Failed to get thing")
-	}
-	res := Marble{}
-	json.Unmarshal(marbleAsBytes, &res)										//un stringify it aka JSON.parse()
-	res.User = args[1]														//change the user
-	
-	jsonAsBytes, _ := json.Marshal(res)
-	err = stub.PutState(args[0], jsonAsBytes)								//rewrite the marble with id as key
-	if err != nil {
-		return nil, err
-	}
-	
-	fmt.Println("- end set user")
-	return nil, nil
-}
-
-func (t *SimpleChaincode) my_set_user(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var err error
 	
 	//   0       1
