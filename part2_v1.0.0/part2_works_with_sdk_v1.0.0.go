@@ -131,6 +131,10 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 		res, err := t.set_user(stub, args)
 		cleanTrades(stub)													//lets make sure all open trades are still valid
 		return res, err
+	} else if function == "my_set_user" {										//change owner of a marble
+		res, err := t.my_set_user(stub, args)
+		cleanTrades(stub)													//lets make sure all open trades are still valid
+		return res, err
 	} else if function == "open_trade" {									//create a new trade order
 		return t.open_trade(stub, args)
 	} else if function == "perform_trade" {									//forfill an open trade order
