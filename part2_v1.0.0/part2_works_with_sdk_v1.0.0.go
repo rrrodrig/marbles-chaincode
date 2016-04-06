@@ -97,7 +97,10 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 	
 	
 	
-	
+	 var x string
+	x = "first"
+
+	 fmt.Println(x)
 	
 	var empty []string
 	jsonAsBytes, _ := json.Marshal(empty)								//marshal an emtpy array of strings to clear the index
